@@ -1,43 +1,3 @@
-# GraphQL Client
-
-- Apollo 는 Server 와 Client 제공하므로
-- 참조문서 : https://www.apollographql.com/docs/react/get-started/
-- `# GraphQL Client
-
-- Apollo 는 Server 와 Client 제공하므로
-- 참조문서 : https://www.apollographql.com/docs/react/get-started/
-- `npm install @apollo/client graphql`
-
-## Apollo 환경 셋팅
-
-- index.js
-
-```js
-import React from "react";
-import ReactDOM from "react-dom/client";
-import "./index.css";
-import App from "./App";
-import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
-
-// GraphQL 환경셋팅
-const client = new ApolloClient({
-  uri: "http://localhost:4000",
-  cache: new InMemoryCache(),
-});
-
-const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(
-  <ApolloProvider client={client}>
-    <App />
-  </ApolloProvider>
-);
-```
-
-- `npm start`
-
-## 목록 출력 및 수정, 삭제, 추가하기
-
-```js
 import { gql, useMutation, useQuery } from "@apollo/client";
 
 // apollo 용 Query 만들기
@@ -108,7 +68,7 @@ const ADD_TODO = gql`
   }
 `;
 
-export const List = () => {
+const List = () => {
   // apollo useQuery(쿼리)
   const { loading, data, error } = useQuery(GET_TODO);
 
@@ -148,9 +108,10 @@ export const List = () => {
     console.log(result);
   };
 
-  // 업데이트 하기
-  const handleAdd = async () => {
+  // 추가 하기
+  const handleAdd = async (_id) => {
     console.log("추가");
+    // 눈여겨보세요.
     const result = await addTodo({
       // variables ====> $ 로 전달할 값;
       variables: {},
@@ -204,4 +165,5 @@ export const List = () => {
     </div>
   );
 };
-```
+
+export default List;
